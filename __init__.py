@@ -13,8 +13,10 @@ class PptControllerSkill(MycroftSkill):
     def handle_ppt_controller(self, message):
         self.speak_dialog('ppt.controller')
 
-    @intent_handler(IntentBuilder("OpenPPTIntent").require('OpenPPT'))
+    @intent_handler(IntentBuilder("OpenPPTIntent").require('OpenPPT').require("Filename"))
     def handle_ppt_open(self, message):
+	filename = message.data.get("Filename")
+	self.emitter.emit(Message("filename " + filename))
 	# Send a rest request
         self.speak_dialog('ppt.open')
 
