@@ -15,12 +15,12 @@ class PptControllerSkill(MycroftSkill):
 
     @intent_handler(IntentBuilder("OpenPPTIntent").require('OpenPPT'))
     def handle_ppt_controller(self, message):
-	// Send a rest request
+	# Send a rest request
         self.speak_dialog('ppt.open')
 
     @intent_handler(IntentBuilder("ClosePPTIntent").require('ClosePPT'))
     def handle_ppt_controller(self, message):
-	// Send a rest request
+	# Send a rest request
         self.speak_dialog('ppt.close')
 
 
