@@ -21,6 +21,16 @@ class PptControllerSkill(MycroftSkill):
 	# Send a rest request
         self.speak_dialog('ppt.open', data=response)
 
+    @intent_handler(IntentBuilder("NextSlideIntent").require('NextSlide'))
+    def handle_next_slide(self, message):
+	# Send a rest request
+        self.speak_dialog('ppt.next')
+
+    @intent_handler(IntentBuilder("PrevSlideIntent").require('PrevSlide'))
+    def handle_prev_slide(self, message):
+	# Send a rest request
+        self.speak_dialog('ppt.prev')
+
     @intent_handler(IntentBuilder("ClosePPTIntent").require('ClosePPT'))
     def handle_ppt_close(self, message):
 	# Send a rest request
