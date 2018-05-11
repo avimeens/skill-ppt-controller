@@ -7,7 +7,8 @@ from mycroft.util.log import getLogger
 class PptControllerSkill(MycroftSkill):
     def __init__(self):
 	super(PptControllerSkill, self).__init__(name="PptControllerSkill")
-	self.rest_endpoint = "http://135.104.238.160"
+	self.rest_endpoint = "http://135.222.162.94:8001"
+	self.file_opened = false
 
     @intent_handler(IntentBuilder("PPTIntent").require('PptController'))
     def handle_ppt_controller(self, message):
@@ -18,23 +19,37 @@ class PptControllerSkill(MycroftSkill):
 	filename = message.data.get("Filename")
 	response = {'filename' : filename}
 	self.enclosure.mouth_text("Nova opening file " + filename)
+	self.file_opened = true;
 	# Send a rest request
-        self.speak_dialog('ppt.open', data=response)
+	param = {'filename':filename}
+	self.enclosure.mouth_text("Sending request to " + url);
+	response = requests.get(url, param)
+	if response.status_code == requests.codes.ok:
+        	self.speak_dialog('ppt.open', data=response)
 
     @intent_handler(IntentBuilder("NextSlideIntent").require('NextSlide'))
     def handle_next_slide(self, message):
 	# Send a rest request
-        self.speak_dialog('ppt.next')
+	if self.file_opened: 
+        	self.speak_dialog('ppt.next')
+	else: 
+		self.speak_dialog('ppt.filenotopen')
 
     @intent_handler(IntentBuilder("PrevSlideIntent").require('PrevSlide'))
     def handle_prev_slide(self, message):
 	# Send a rest request
-        self.speak_dialog('ppt.prev')
+	if self.file_opened: 
+        	self.speak_dialog('ppt.prev')
+	else: 
+		self.speak_dialog('ppt.filenotopen')
 
     @intent_handler(IntentBuilder("ClosePPTIntent").require('ClosePPT'))
     def handle_ppt_close(self, message):
 	# Send a rest request
-        self.speak_dialog('ppt.close')
+	if self.file_opened: 
+        	self.speak_dialog('ppt.close')
+	else: 
+		self.speak_dialog('ppt.filenotopen')
 
 
 def create_skill():
