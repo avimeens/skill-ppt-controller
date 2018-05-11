@@ -8,7 +8,7 @@ class PptControllerSkill(MycroftSkill):
     def __init__(self):
 	super(PptControllerSkill, self).__init__(name="PptControllerSkill")
 	self.rest_endpoint = "http://135.222.162.94:8001"
-	self.file_opened = false
+	self.file_opened = False
 
     @intent_handler(IntentBuilder("PPTIntent").require('PptController'))
     def handle_ppt_controller(self, message):
@@ -19,7 +19,7 @@ class PptControllerSkill(MycroftSkill):
 	filename = message.data.get("Filename")
 	response = {'filename' : filename}
 	self.enclosure.mouth_text("Nova opening file " + filename)
-	self.file_opened = true;
+	self.file_opened = True;
 	# Send a rest request
 	param = {'filename':filename}
 	self.enclosure.mouth_text("Sending request to " + url);
