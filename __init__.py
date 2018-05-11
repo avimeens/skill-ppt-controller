@@ -31,9 +31,15 @@ class PptControllerSkill(MycroftSkill):
 
     @intent_handler(IntentBuilder("NextSlideIntent").require('NextSlide'))
     def handle_next_slide(self, message):
-	# Send a rest request
 	if self.file_opened: 
-        	self.speak_dialog('ppt.next')
+		# Send a rest request
+		nurl = self.url + "/nextpage"
+		self.enclosure.mouth_text("Sending request to " + nurl);
+		response = requests.get(nurl)
+		if response.status_code == requests.codes.ok:
+        		self.speak_dialog('ppt.next')
+		else: 
+			self.speak_dialog('ppt.filenotfound')
 	else: 
 		self.speak_dialog('ppt.filenotopen')
 
