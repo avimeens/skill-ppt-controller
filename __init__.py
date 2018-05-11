@@ -16,7 +16,7 @@ class PptControllerSkill(MycroftSkill):
     @intent_handler(IntentBuilder("OpenPPTIntent").require('OpenPPT').require("Filename"))
     def handle_ppt_open(self, message):
 	filename = message.data.get("Filename")
-	self.emitter.mouth_text("filename " + filename)
+	self.enclosure.mouth_text("filename " + filename)
 	# Send a rest request
         self.speak_dialog('ppt.open')
 
