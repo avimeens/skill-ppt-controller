@@ -26,7 +26,7 @@ class PptControllerSkill(MycroftSkill):
 	resp = {'filename' : filename}
 	if response.status_code == requests.codes.ok:
         	self.speak_dialog('ppt.open', data=resp)
-	else 
+	else: 
 		self.speak_dialog('ppt.filenotfound')
 
     @intent_handler(IntentBuilder("NextSlideIntent").require('NextSlide'))
