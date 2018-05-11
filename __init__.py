@@ -47,7 +47,14 @@ class PptControllerSkill(MycroftSkill):
     def handle_prev_slide(self, message):
 	# Send a rest request
 	if self.file_opened: 
-        	self.speak_dialog('ppt.prev')
+		# Send a rest request
+		purl = self.url + "/prevpage"
+		self.enclosure.mouth_text("Sending request to " + purl);
+		response = requests.get(purl)
+		if response.status_code == requests.codes.ok:
+        		self.speak_dialog('ppt.prev')
+		else: 
+			self.speak_dialog('ppt.filenotfound')
 	else: 
 		self.speak_dialog('ppt.filenotopen')
 
@@ -55,7 +62,13 @@ class PptControllerSkill(MycroftSkill):
     def handle_ppt_close(self, message):
 	# Send a rest request
 	if self.file_opened: 
-        	self.speak_dialog('ppt.close')
+		purl = self.url + "/close"
+		self.enclosure.mouth_text("Sending request to " + purl);
+		response = requests.get(purl)
+		if response.status_code == requests.codes.ok:
+        		self.speak_dialog('ppt.close')
+		else: 
+			self.speak_dialog('ppt.filenotfound')
 	else: 
 		self.speak_dialog('ppt.filenotopen')
 
